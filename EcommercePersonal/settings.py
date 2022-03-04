@@ -39,15 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-<<<<<<< HEAD
     'produto'
     'pedido',
     'perfil',
-=======
-
-
-    'produto',
->>>>>>> featureproduto
 ]
 
 MIDDLEWARE = [

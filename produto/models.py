@@ -2,6 +2,8 @@ from PIL import Image
 import os
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
+#from EcommercePersonal.utils import utils
 
 
 class Produto(models.Model):
@@ -10,9 +12,10 @@ class Produto(models.Model):
     descricao_longa = models.TextField()
     imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/',
                                blank=True, null=True)
-    slug = models.SlugField(unique=True)
-    preco_marketing = models.FloatField()
-    promocao_marcketing = models.FloatField(default=0)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    preco_marketing = models.FloatField(verbose_name='Preço')
+    promocao_marcketing = models.FloatField(default=0,
+                                            verbose_name='Preço Promocional')
     tipo = models.CharField(
         default='V',
         max_length=1,
@@ -38,9 +41,13 @@ class Produto(models.Model):
         new_height = round((new_width * original_height) / original_width)
 
         nova_imagem = img_pil.resize((new_width, new_height), Image.LANCZOS)
-        nova_imagem.save(img_full_path, optimize=True, quality=60)
+        nova_imagem.save(img_full_path, optimize=True, quality=50)
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = slugify(self.nome)
+            self.slug = slug
+
         super().save(*args, **kwargs)
 
         max_image_size = 800
@@ -50,8 +57,8 @@ class Produto(models.Model):
 
 
 class Variavel(models.Model):
-    nome = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    produto = models.CharField(max_length=50, blank= True, null=True)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=50, blank= True, null=True)
     preco = models.FloatField()
     preco_promocional = models.FloatField(default=0)
     estoque = models.PositiveIntegerField(default=1)

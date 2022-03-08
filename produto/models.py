@@ -3,7 +3,7 @@ import os
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
-#from EcommercePersonal.utils import utils
+from EcommercePersonal.utils import utils
 
 
 class Produto(models.Model):
@@ -25,8 +25,13 @@ class Produto(models.Model):
         )
     )
 
-    def __str__(self):
-        return self.nome
+    def get_preco_formatado(self):
+        return utils.formata_preco(self.preco_marketing)
+    get_preco_formatado.short_descrition = 'Preço'
+
+    def get_preco_promocional_formatado(self):
+        return utils.formata_preco(self.promocao_marcketing)
+    get_preco_formatado.short_descrition = 'Preço Promocional'
 
     @staticmethod
     def resize_imagem(original_img, new_width=800):
@@ -55,6 +60,9 @@ class Produto(models.Model):
         if self.imagem:
             self.resize_imagem(self.imagem, max_image_size)
 
+    def __str__(self):
+        return self.nome
+
 
 class Variavel(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
@@ -64,8 +72,8 @@ class Variavel(models.Model):
     estoque = models.PositiveIntegerField(default=1)
 
     class Meta:
-        verbose_name = 'variavel'
-        verbose_name_plural = 'variaveis'
+        verbose_name = 'Variavel'
+        verbose_name_plural = 'Variaveis'
 
     def __str__(self):
         return self.nome or self.produto

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views import View
-from django.http import HttpResponse
+
 from django.contrib import messages
 from django.db.models import Q
 
@@ -131,7 +131,7 @@ class AdicionarAoCarrinho(View):
             f'{carrinho[variavel_id]["quantidade"]}x.'
         )
 
-        return  redirect(http_referer)
+        return redirect(http_referer)
 
 
 class RemoverDoCarrinho(View):
@@ -164,7 +164,7 @@ class RemoverDoCarrinho(View):
 class Carrinho(View):
     def get(self, *args, **kwargs):
         contexto = {
-            'carrinho':self.request.session.get('carrinho', {})
+            'carrinho': self.request.session.get('carrinho', {})
         }
 
         return render(self.request, 'produto/carrinho.html, contexto')

@@ -34,8 +34,8 @@ class Produto(models.Model):
     get_preco_formatado.short_descrition = 'Preço Promocional'
 
     @staticmethod
-    def resize_imagem(original_img, new_width=800):
-        img_full_path = os.path.join(settings.MEDIA_ROOT, original_img.name)
+    def resize_imagem(img, new_width=800):
+        img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
         img_pil = Image.open(img_full_path)
         original_width, original_height = img_pil.size
 
@@ -76,4 +76,4 @@ class Variavel(models.Model):
         verbose_name_plural = 'Variaveis'
 
     def __str__(self):
-        return self.nome or self.produto
+        return self.nome or self.produto.nome

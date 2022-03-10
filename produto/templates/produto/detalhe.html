@@ -36,24 +36,24 @@
             <form action="{% url 'produto:adicionaraocarrinho' %}" id="form-add-to-cart">
                 <div class="form-group">
                     <select id="select-variacoes" name="vid" class="form-control form-control-lg">
-                        {% for variacao in produto.variacao_set.all %}
+                        {% for variavel in produto.variavel_set.all %}
 
-                        {% if variacao.preco_promocional %}
-                        <option data-preco="{{ variacao.preco|formata_preco }}"
-                            data-preco-promocional="{{ variacao.preco_promocional|formata_preco }}"
-                            value="{{ variacao.id }}">
-                            {% if variacao.nome %}
-                            {{ variacao.nome }}
+                        {% if variavel.preco_promocional %}
+                        <option data-preco="{{ variavel.preco|formata_preco }}"
+                            data-preco-promocional="{{ variavel.preco_promocional|formata_preco }}"
+                            value="{{ variavel.id }}">
+                            {% if variavel.nome %}
+                            {{ variavel.nome }}
                             {% else %}
-                            {{ variacao }}
+                            {{ variavel }}
                             {% endif %}
                         </option>
                         {% else %}
-                        <option data-preco="{{ variacao.preco|formata_preco }}" value="{{ variacao.id }}">
-                            {% if variacao.nome %}
-                            {{ variacao.nome }}
+                        <option data-preco="{{ variavel.preco|formata_preco }}" value="{{ variavel.id }}">
+                            {% if variavel.nome %}
+                            {{ variavel.nome }}
                             {% else %}
-                            {{ variacao }}
+                            {{ variavel }}
                             {% endif %}
                         </option>
                         {% endif %}

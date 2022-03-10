@@ -21,11 +21,11 @@
                     {{ linha.produto_nome }}
                 </a>
 
-                <a class="ml-3" href="{% url 'produto:removerdocarrinho' %}?vid={{ linha.variacao_id }}">
+                <a class="ml-3" href="{% url 'produto:removerdocarrinho' %}?vid={{ linha.variavel_id }}">
                     <i class="fas fa-times-circle text-danger" aria-hidden="true"></i>
                 </a>
             </td>
-            <td>{{ linha.variacao_nome }}</td>
+            <td>{{ linha.variavel_nome }}</td>
             <td>
                 {{ linha.quantidade }} x
                 {% if linha.preco_unitario_promocional %}

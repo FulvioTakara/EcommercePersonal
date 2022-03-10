@@ -52,6 +52,9 @@ class Perfil(models.Model):
         )
     )
 
+    def __str__(self):
+        return f'{self.usuario}'
+
     def clean(self):
         error_messages = {}
 
@@ -77,6 +80,3 @@ class Perfil(models.Model):
     class Meta:
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfis'
-
-    def __str__(self):
-        return f'{self.usuario}'

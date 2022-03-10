@@ -32,7 +32,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'password',
-                  'password2', 'email')
+                  'password2', 'email',)
 
         def clean(self, *args, **kwargs):
             data = self.data
@@ -53,6 +53,7 @@ class UserForm(forms.ModelForm):
             error_msg_password_short = 'A senha necessita de pelo menos 6 caracteres'
             error_msg_required_field = 'esta campo é obrigatório'
 
+#   Usuários logados: atualização
             if self.usuario:
                 if usuario_db:
                     if usuario_data != usuario_db.username:
@@ -63,16 +64,32 @@ class UserForm(forms.ModelForm):
                         validation_error_msgs['email'] = error_msg_email_exists
 
                 if password_data:
+                    if password_data != password2_data:
+                        validation_error_msgs['password'] = error_msg_password_match
+                        validation_error_msgs['password2'] = error_msg_password_match
+
+                    if len(password_data) < 6:
+                        validation_error_msgs['password'] = error_msg_password_short
+
+#   Usuários não logados: cadastro
+            else:
+                if usuario_db:
+                    validation_error_msgs['username'] = error_msg_user_exists
+
+                if email_db:
+                    validation_error_msgs['email'] = error_msg_email_exists
+
+                if not password_data:
                     validation_error_msgs['password'] = error_msg_required_field
 
-                if password2_data:
+                if not password2_data:
                     validation_error_msgs['password2'] = error_msg_required_field
 
                 if password_data != password2_data:
                     validation_error_msgs['password'] = error_msg_password_match
                     validation_error_msgs['password2'] = error_msg_password_match
 
-                if len(password_data) <6:
+                if len(password_data) < 6:
                     validation_error_msgs['password'] = error_msg_password_short
 
             if validation_error_msgs:

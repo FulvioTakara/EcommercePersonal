@@ -36,11 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
 
     'produto',
     'pedido',
     'perfil',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,6 +141,6 @@ MESSAGE_TAGS = {
     constants.WARNING: 'alert-warning',
 }
 
-SESSION_COOKIE_AGE = 60 * 60 * 24 *7
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 
 SESSION_SAVE_EVERY_REQUEST = False

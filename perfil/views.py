@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.views.generic import ListView
 from django.views import View
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -155,7 +154,7 @@ class Login(View):
                 self.request,
                 'Usuário ou senha inválidos.'
             )
-            return redirect('perfilcriar')
+            return redirect('perfil:criar')
 
         usuario = authenticate(self.request,
                                username=username, password=password)
@@ -167,8 +166,11 @@ class Login(View):
             )
             return redirect('perfil:criar')
 
-        login(self.request,
-              'Você fez login no sistema e pode concluir sua compra.')
+        login(self.request, user=usuario)
+
+        messages.sucess(
+            self.request,
+            'Você fez login no sistema e pode concluir sua compra.')
         return redirect('produto:carrinho')
 
 

@@ -53,10 +53,10 @@ class SalvarPedido(View):
             )
         )
 
-        for variacao in bd_varicoes:
-            vid = str(variacao.id)
+        for variavel in bd_varicoes:
+            vid = str(variavel.id)
 
-            estoque = variacao.estoque
+            estoque = variavel.estoque
             qtd_carrinho = carrinho[vid]['quantidade']
             preco_unt = carrinho[vid]['preco_unitario']
             preco_unt_promo = carrinho[vid]['preco_unitario_promocinal']
@@ -100,8 +100,8 @@ class SalvarPedido(View):
                         pedido=pedido,
                         produto=v['produto_nome'],
                         produto_id=v['produto_id'],
-                        variacao=v['variacao_nome'],
-                        variacao_id=v['variacao_id'],
+                        variavel=v['variavel_nome'],
+                        variavel_id=v['variavel_id'],
                         preco=v['preco_quantitativo'],
                         preco_promocional=v['preco_quantitativo_promocional'],
                         quantidade=v['quantidade'],
@@ -110,7 +110,7 @@ class SalvarPedido(View):
                 ]
             )
 
-            del self.request.session['carrimho']
+            del self.request.session['carrinho']
 
             return redirect(
                 reverse(
@@ -131,7 +131,7 @@ class Detalhe(DispatchLoginRequiredMixin, DetailView):
 
 class Lista(DispatchLoginRequiredMixin, ListView):
     model = Pedido
-    context_object_name = 'pedido'
+    context_object_name = 'pedidos'
     template_name = 'pedido/lista.html'
     paginate_by = 10
     odering = ['-id']
